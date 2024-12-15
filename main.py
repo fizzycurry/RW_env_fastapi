@@ -1,5 +1,4 @@
-from http.client import HTTPException
-from fastapi import FastAPI, UploadFile # type: ignore
+from fastapi import FastAPI, UploadFile, HTTPException # type: ignore
 from fastapi.responses import FileResponse # type: ignore
 from dotenv import load_dotenv # type: ignore
 from getENV import getEnvironmentVariable
@@ -20,25 +19,25 @@ if not path.exists(FILEPATH):
 
 
 @app.post("/port")
-async def port():
+async def port()->dict:
     return {"PORT": PORT}
 
 @app.post("/upload/")
-async def uploadFile(file: UploadFile):
+async def uploadFile(file: UploadFile)-> dict:
     try:
         filepath = path.join(FILEPATH, file.filename) 
         with open(filepath, "wb") as f:
             while chunk := file.file.read(1024*1024):
                 f.write(chunk)
         return {"message": "File uploaded successfully", "filename": file.filename}
-    
     except Exception as e:
-        print(e)
-        return {"message": "File could not be  uploaded"}
+        raise HTTPException(status_code=400, detail="File could not be uploaded")
+    finally:
+        file.file.close()
 
 
 @app.get("/view/", response_class=FileResponse)
-async def serveFile(filename: str):
+async def serveFile(filename: str) -> FileResponse:
     filepath = path.join(FILEPATH, path.basename(filename))
 
     if not path.exists(filepath) or not path.isfile(filepath):
