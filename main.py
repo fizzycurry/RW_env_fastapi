@@ -12,7 +12,7 @@ app = FastAPI()
 
 PORT = getEnvironmentVariable("PORT", int, 8000)
 FILEPATH = getEnvironmentVariable("FILEPATH", str, "uploads/")
-
+DEBUG = getEnvironmentVariable("DEBUG", bool, False) 
 # make sure path exists
 if not path.exists(FILEPATH):
     makedirs(FILEPATH)
@@ -50,4 +50,4 @@ async def serveFile(filename: str) -> FileResponse:
     return FileResponse(filepath, media_type=mime_type)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=PORT, reload=True) #getting values from environment variables
+    uvicorn.run("main:app", port=PORT, reload=DEBUG) #getting values from environment variables
