@@ -1,7 +1,7 @@
 from functools import lru_cache
 from fastapi import FastAPI, UploadFile # type: ignore
 from dotenv import load_dotenv # type: ignore
-from conversions import getEnvironmentVariable
+from getENV import getEnvironmentVariable
 from os import makedirs, path
 import uvicorn # type: ignore
 
