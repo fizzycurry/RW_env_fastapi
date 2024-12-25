@@ -43,8 +43,21 @@ jobs:
         # exit-zero treats all errors as warnings
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    # Optional: Run server if needed
-    - name: Run server
-      if: ${{ github.event_name == 'push' }} # Optional condition
+    - name: Start and Stop Server
       run: |
-        python3 main.py
+        # Start the server in the background
+        python3 main.py &
+        SERVER_PID=$!
+
+        # Wait for the server to initialize
+        sleep 10
+
+        # Check if the server is still running
+        if ps -p $SERVER_PID > /dev/null; then
+          echo "Server started successfully."
+          # Stop the server
+          kill $SERVER_PID
+        else
+          echo "Server failed to start."
+          exit 1
+        fi
