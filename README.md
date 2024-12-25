@@ -40,3 +40,20 @@
 
 7. **Access the Application:** Visit http://127.0.0.1:8000/docs to view the API documentation.
 
+
+## Commands to create executables
+### For all distributions
+```bash
+python3 -m nuitka --standalone --include-data-dir=./inject_files=inject_files main.py
+```
+### Running on single machine 
+```bash
+python -m nuitka --onefile main.py --output-filename=test --include-data-dir=./inject_files=inject_files
+```
+
+## Note
+While trying out the commands above, it would be better to keep the name of the folder or data directory the same for the output folder to understand how the commands work and/or differ. Specifically this option:
+
+```bash
+--include-data-dir={folder containing data to include in the executable}={folder name used by the executable}
+```

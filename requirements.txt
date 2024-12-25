@@ -16,6 +16,8 @@ Jinja2==3.1.4
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
+Nuitka==2.5.6
+ordered-set==4.1.0
 pydantic==2.10.3
 pydantic_core==2.27.1
 Pygments==2.18.0
@@ -33,3 +35,4 @@ uvicorn==0.33.0
 uvloop==0.21.0
 watchfiles==1.0.3
 websockets==14.1
+zstandard==0.23.0
